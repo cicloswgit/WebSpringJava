@@ -34,12 +34,17 @@ public class PersonController {
 	@RequestMapping(value= "/person/add", method = RequestMethod.POST)
 	public String addPerson(@ModelAttribute("person") Person p){
 		
-		if(p.getId() == 0){
-			//new person, add it
-			this.personService.addPerson(p);
-		}else{
-			//existing person, call update
-			this.personService.updatePerson(p);
+		try{
+			if(p != null & p.getId() == 0){
+				//new person, add it
+				this.personService.addPerson(p);
+			}else{
+				//existing person, call update
+				this.personService.updatePerson(p);
+			}
+		}catch(Exception e)
+		{
+			System.out.println("Ocorreu um erro. Motivo: "+ e.getMessage());
 		}
 		
 		return "redirect:/person";
